@@ -1,0 +1,15 @@
+<% if user_signed_in?%>
+<p>Click this button to check whether you are connected to MySql <input type='button' value="Mysql Connectivity Test" onclick="alert('Connection established to mysql:<%= @current_user.email? rescue false%>')"></p>
+<p>Click this button to check whether you are connected to Mongo <input type='button' value="Mongo Connectivity Test" onclick="alert('Connection established to mongo:<%= UserInfo.first.location? rescue false%>')"></p>
+<% redis = Redis.new 
+ping = redis.ping rescue ''
+if(!ping.blank?) 
+@redis = 'true' 
+else 
+@redis = 'false' 
+end
+%>
+Click this button to check whether you are connected to Redis <input type='button' value="Redis Connectivity Test" onclick="alert('Connection established to redis:<%= @redis%>')">
+<% else %>
+<%= link_to 'Sign_in',new_user_session_path%>
+<% end %>
